@@ -1,0 +1,24 @@
+1.Suppose you are rearranging your library.For this you have to take the innerost shelf and reverses 
+the order of books.You hVW TO break the walls of the shelf.In the end there will be only books and no shelf 
+walls of shelves are shown by "/" and "\" respectively whereas books are represented by lower case alphabets.
+Perform the operating using Stack data structure.
+Example:
+Input:/u/love\i\
+Output:iloveu
+
+
+
+2.Suppose n numbers of customers are waiting in queue. Each node of the queue contains two 
+information customer id, and age.Now you have to devide the customers according to their age.
+Those who are aged more than 60 they are treated as unemployed citizen,those who are 40 to 60
+are treated as employed, 25 to 39 as workercitizen, 11 to 25 young and below than that are child.
+Now show the customer information according to the classification.
+
+
+
+3.Suppose you have a sentence as input and your work is to remove punctuations from the sentence and tokenize
+the words of the sentence.To accomplish the task use SLL and data part of each node of a SLL
+contains the word.Now display the SLL.Remember that there will be no duplicate data in the list.
+Input:Thia is Data Structure, I like Data Structure.
+Output:This  is Data  Structure  I  like 
+N.B: Don't use any built-in function for string splitting.

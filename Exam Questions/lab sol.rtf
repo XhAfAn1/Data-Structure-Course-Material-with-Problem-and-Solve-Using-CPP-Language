@@ -1,0 +1,684 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Courier New;}}
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 4.1\par
+
+\pard\f1\lang1033 #include <iostream>\par
+#include <bits/stdc++.h>\par
+using namespace std;\par
+\par
+void copystack(stack<string>* s1, stack<string>* s2)\{\par
+\par
+    stack<string> temp1;\par
+    stack<string> temp2;\par
+\par
+    while(!s1->empty())\{\par
+        temp1.push(s1->top());\par
+        s1->pop();\par
+    \}\par
+\par
+    while(!s2->empty())\{\par
+        temp2.push(s2->top());\par
+        s2->pop();\par
+    \}\par
+\par
+    while(!temp1.empty())\{\par
+        s2->push(temp1.top());\par
+        temp1.pop();\par
+    \}\par
+\par
+    while(!temp2.empty())\{\par
+        s1->push(temp2.top());\par
+        temp2.pop();\par
+    \}\par
+\}\par
+\par
+int main()\par
+\{\par
+    stack<string> s1;\par
+    s1.push("FIRST");\par
+    s1.push("SECOND");\par
+    s1.push("THIRD");\par
+    stack<string> s2;\par
+    s2.push("first");\par
+    s2.push("second");\par
+    s2.push("third");\par
+\par
+    copystack(&s1,&s2);\par
+\par
+\par
+    while(!s1.empty())\{\par
+        cout << s1.top() << "\\t";\par
+        s1.pop();\par
+    \}\par
+\par
+    cout << "\\n";\par
+\par
+    while(!s2.empty())\{\par
+        cout << s2.top() << "\\t";\par
+        s2.pop();\par
+    \}\par
+\par
+\par
+\par
+\par
+\}\par
+\par
+
+\pard\sa200\sl276\slmult1\f0\lang9 4.2\par
+
+\pard\f1\lang1033 #include <iostream>\par
+#include <conio.h>\par
+#define MAX 100\par
+using namespace std;\par
+typedef struct stack\par
+\{\par
+int data[MAX];\par
+int top;\par
+\}stack;\par
+int empty(stack *s)\par
+\{\par
+if(s -> top == -1)\par
+return(1);\par
+return(0);\par
+\}\par
+int full(stack *s)\par
+\{\par
+if(s -> top == MAX - 1)\par
+return(1);\par
+return(0);\par
+\}\par
+void push(stack *s, int x)\par
+\{\par
+s -> top = s -> top + 1;\par
+s -> data[s -> top] = x;\par
+\}\par
+int pop(stack *s)\par
+\{\par
+int x;\par
+x = s -> data[s -> top];\par
+s -> top = s -> top - 1;\par
+return(x);\par
+\}\par
+int main()\par
+\{\par
+stack s;\par
+int num;\par
+s.top = -1;\par
+cout << "Enter a decimal number:";\par
+cin >> num;\par
+while((num != 0))\par
+\{\par
+if(!full(&s))\par
+\{\par
+push(&s, num % 2);\par
+num = num / 2;\par
+\}\par
+else\par
+\{\par
+cout << "Stack overflow";\par
+\}\par
+\}\par
+while(!empty(&s))\par
+\{\par
+num = pop(&s);\par
+cout << num;\par
+\}\par
+\}\par
+
+\pard\sa200\sl276\slmult1\f0\lang9 4.3\par
+
+\pard\f1\lang1033 #include <iostream>\par
+using std::cout;\par
+using std::endl;\par
+#include<string>\par
+template <typename T>\par
+class Stack \{\par
+private:\par
+ typedef struct node \{\par
+ T data;\par
+ node *next;\par
+ \} *node_ptr;\par
+ node_ptr head;\par
+ node_ptr curr;\par
+ node_ptr temp;\par
+public:\par
+ Stack();\par
+ void add_node(T add_data);\par
+ void delete_node(T del_data);\par
+ void pop();\par
+ void push();\par
+ void print_stack();\par
+ int size();\par
+ T last();\par
+ T at(int index);\par
+ T get_next(int index);\par
+\};\par
+template <typename T>\par
+Stack<T>::Stack() \{\par
+ head = NULL;\par
+ curr = NULL;\par
+ temp = NULL;\par
+\}\par
+template <typename T>\par
+void Stack<T>::add_node(T add_data) \{\par
+ node_ptr n = new node;\par
+ n->next = NULL;\par
+ n->data = add_data;\par
+ if (head != NULL) \{\par
+ curr = head;\par
+ while (curr->next != NULL) \{\par
+ curr = curr->next;\par
+ \}\par
+ curr->next = n;\par
+ \}\par
+ else \{\par
+ head = n;\par
+ \}\par
+\}\par
+template <typename T>\par
+void Stack<T>::delete_node(T del_data) \{\par
+ node_ptr del_ptr = NULL;\par
+ temp = head;\par
+ curr = head;\par
+ while (curr != NULL && curr->data != del_data) \{\par
+ temp = curr;\par
+ curr = curr->next;\par
+ \}\par
+ if (curr == NULL) \{\par
+ cout << "Error: [" << del_data << "] was not in the stack" << endl;\par
+ delete del_ptr;\par
+ \}\par
+ else \{\par
+ del_ptr = curr;\par
+ curr = curr->next;\par
+ temp->next = curr;\par
+ if (del_ptr == head) \{\par
+ head = head->next;\par
+ temp = NULL;\par
+ \}\par
+ delete del_ptr;\par
+ cout << "The value [" << del_data << "] was deleted" << endl;\par
+ \}\par
+\}\par
+template <typename T>\par
+void Stack<T>::pop() \{\par
+ temp = head;\par
+ head = head->next;\par
+ delete temp;\par
+\}\par
+template <typename T>\par
+void Stack<T>::push() \{\par
+ if (head->next == NULL) \{\par
+ delete head;\par
+ head = NULL;\par
+ \}\par
+ else \{\par
+ node_ptr next_to_end = head;\par
+ node_ptr end = head->next;\par
+ while (end->next != NULL) \{\par
+ next_to_end = end;\par
+ end = end->next;\par
+ \}\par
+ delete end;\par
+ next_to_end->next = NULL;\par
+ \}\par
+\}\par
+template <typename T>\par
+void Stack<T>::print_stack() \{\par
+ curr = head;\par
+ while (curr != NULL) \{\par
+ cout << curr->data << endl;\par
+ curr = curr->next;\par
+ \}\par
+\}\par
+template <typename T>\par
+int Stack<T>::size() \{\par
+ node_ptr p = head;\par
+ int count;\par
+ while (p != NULL) \{\par
+ count++;\par
+ p = p->next;\par
+ \}\par
+ return count;\par
+\}\par
+template <typename T>\par
+T Stack<T>::last() \{\par
+ if (head == NULL) \{\par
+ return head->data;\par
+ \}\par
+ else \{\par
+ node_ptr end = head;\par
+ while (end->next != NULL) \{\par
+ end = end->next;\par
+ \}\par
+ return end->data;\par
+ \}\par
+\}\par
+template <typename T>\par
+T Stack<T>::at(int index) \{\par
+ curr = head;\par
+ int count = 0;\par
+ while (curr != NULL)\{\par
+ if (count == index)\{\par
+ return curr->data;\par
+ \}\par
+ count++;\par
+ curr = curr->next;\par
+ \}\par
+ if (curr == NULL) \{\par
+ cout << "Error: [" << index << "] does not exist" << endl;\par
+ \}\par
+\}\par
+template <typename T>\par
+T Stack<T>::get_next(int index) \{\par
+ curr = head;\par
+ int count = 0;\par
+ while (curr != NULL)\{\par
+ if (count == index)\{\par
+ return curr->next->data;\par
+ \}\par
+ count++;\par
+ curr = curr->next;\par
+ \}\par
+ if (curr == NULL) \{\par
+ cout << "Error: [" << index << "] does not exist" << endl;\par
+ \}\par
+\}\par
+\par
+
+\pard\sa200\sl276\slmult1\f0\lang9 4.4\par
+
+\pard\f1\lang1033 #include<bits/stdc++.h>\par
+\par
+using namespace std;\par
+\par
+int precednce(char op)\par
+\{\par
+if(op == '*' || op == '/')\par
+return 2;\par
+else if(op == '+' || op == '-')\par
+return 1;\par
+else\par
+return -1;\par
+\}\par
+\par
+void infixToPostx(string infix)\par
+\{\par
+std::stack<char> input;\par
+input.push('N');\par
+int l = infix.length();\par
+string postfix;\par
+for(int i = 0; i < l; i++)\par
+\{\par
+if((infix[i] >= 'a' && infix[i] <= 'z')||(infix[i] >= 'A' && infix[i] <= 'Z')||(infix[i] >= '0' && infix[i] <= '9'))\par
+\{\par
+postfix+=infix[i];\par
+\}\par
+else if(infix[i] == '(')\par
+\{\par
+input.push('(');\par
+\}\par
+else if(infix[i] == ')')\par
+\{\par
+while(input.top() != 'N' && input.top() != '(')\par
+\{\par
+char c = input.top();\par
+input.pop();\par
+postfix += c;\par
+\}\par
+if(input.top() == '(')\par
+\{\par
+char c = input.top();\par
+input.pop();\par
+\}\par
+\}\par
+else if(infix[i]=='+' || infix[i]=='-' || infix[i]=='*' || infix[i]=='/')\par
+\{\par
+while(input.top() != 'N' && precednce(infix[i]) <= precednce(input.top()))\par
+\{\par
+char c = input.top();\par
+input.pop();\par
+postfix += c;\par
+\}\par
+input.push(infix[i]);\par
+\}\par
+else\par
+\{\par
+cout<<"Invalid input string";\par
+exit(0);\par
+\}\par
+\}\par
+while(input.top() != 'N')\par
+\{\par
+char c = input.top();\par
+input.pop();\par
+postfix += c;\par
+\}\par
+cout <<"Postfix : "<<postfix<< endl;\par
+\par
+\}\par
+int main()\par
+\{\par
+string input;\par
+cout<<"Enter a string:";\par
+getline(cin,input);\par
+infixToPostx(input);\par
+return 0;\par
+\par
+\}\par
+\par
+\par
+
+\pard\sa200\sl276\slmult1\f0\lang9 5.1\par
+
+\pard\f1\lang1033 #include <iostream>\par
+using namespace std;\par
+\par
+class BST\par
+\{\par
+    int data;\par
+    BST *left, *right;\par
+\par
+public:\par
+    BST();\par
+    BST(int);\par
+    BST* Insert(BST*, int);\par
+\par
+    void Inorder(BST*);\par
+\};\par
+\par
+BST ::BST()\par
+    : data(0)\par
+    , left(NULL)\par
+    , right(NULL)\par
+    \{\par
+\par
+    \}\par
+\par
+BST ::BST(int value)\par
+\{\par
+    data = value;\par
+    left = right = NULL;\par
+\}\par
+\par
+BST* BST ::Insert(BST* root, int value)\par
+\{\par
+    if (!root) \{\par
+\par
+        return new BST(value);\par
+    \}\par
+\par
+\par
+    if (value > root->data) \{\par
+\par
+        root->right = Insert(root->right, value);\par
+    \}\par
+    else \{\par
+\par
+        root->left = Insert(root->left, value);\par
+    \}\par
+\par
+    return root;\par
+\}\par
+\par
+void BST ::Inorder(BST* root)\par
+\{\par
+    if (!root) \{\par
+        return;\par
+    \}\par
+    Inorder(root->left);\par
+    cout << root->data << endl;\par
+    Inorder(root->right);\par
+\}\par
+int main()\par
+\{\par
+    BST b, *root = NULL;\par
+    root = b.Insert(root, 13);\par
+    b.Insert(root, 3);\par
+    b.Insert(root, 2);\par
+    b.Insert(root, 4);\par
+    b.Insert(root, 17);\par
+    b.Insert(root, 16);\par
+    b.Insert(root, 20);\par
+\par
+    b.Inorder(root);\par
+    return 0;\par
+\}\par
+
+\pard\sa200\sl276\slmult1\f0\lang9 5.2\par
+
+\pard\f1\lang1033 #include<iostream>\par
+using namespace std;\par
+\par
+struct node\par
+\{\par
+\tab int data;\par
+\tab node *left;\par
+\tab node *right;\par
+\};\par
+node* CreateNode(int data)\par
+\{\par
+\tab node *newnode = new node;\par
+\tab newnode->data = data;\par
+\tab newnode->left = NULL;\par
+\tab newnode->right = NULL;\par
+\par
+\tab return newnode;\par
+\}\par
+\par
+node* InsertIntoTree(node* root, int data)\par
+\{\par
+\tab node *temp = CreateNode(data);\par
+\tab node *t = new node;\par
+\tab t = root;\par
+\tab if(root == NULL)\par
+\tab\tab root = temp;\par
+\tab else\par
+\tab\{\par
+\tab\tab while(t != NULL)\par
+\tab\tab\{\par
+\tab\tab\tab if(t->data < data )\par
+\tab\tab\tab\{\par
+\tab\tab\tab\tab if(t->right == NULL)\par
+\tab\tab\tab\tab\{\par
+\tab\tab\tab\tab\tab t->right = temp;\par
+\tab\tab\tab\tab\tab break;\par
+\tab\tab\tab\tab\}\par
+\tab\tab\tab\tab t = t->right;\par
+\tab\tab\tab\}\par
+\par
+\tab\tab\tab else if(t->data > data)\par
+\tab\tab\tab\{\par
+\tab\tab\tab\tab if(t->left == NULL)\par
+\tab\tab\tab\tab\{\par
+\tab\tab\tab\tab\tab t->left = temp;\par
+\tab\tab\tab\tab\tab break;\par
+\tab\tab\tab\tab\}\par
+\tab\tab\tab\tab t = t->left;\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\}\par
+\tab return root;\par
+\}\par
+\par
+void Search(node *root, int data)\par
+\{\par
+\tab int depth = 0;\par
+\tab node *temp = new node;\par
+\tab temp = root;\par
+\tab while(temp != NULL)\par
+\tab\{\par
+\tab\tab depth++;\par
+\tab\tab if(temp->data == data)\par
+\tab\tab\{\par
+\tab\tab\tab cout<<"\\nData found at depth: "<<depth;\par
+\tab\tab\tab return;\par
+\tab\tab\}\par
+\par
+\tab\tab else if(temp->data > data)\par
+\tab\tab\tab temp = temp->left;\par
+\tab\tab else\par
+\tab\tab\tab temp = temp->right;\par
+\tab\}\par
+\par
+\tab cout<<"\\n Data not found";\par
+\tab return;\par
+\}\par
+\par
+int main()\par
+\{\par
+\tab char ch;\par
+\tab int n, i, a[12]=\{10, 4, 80, 11, 99, 6, 2, 67, 57, 70, 18, 24\};\par
+\tab node *root = new node;\par
+\tab root = NULL;\par
+\tab for(i = 0; i < 12; i++)\par
+\tab\tab root = InsertIntoTree(root, a[i]);\par
+\par
+\tab up:\par
+\tab cout<<"\\nEnter the Element to be search: ";\par
+\tab cin>>n;\par
+\tab Search(root, n);\par
+\tab cout<<"\\n\\n\\tYou want to search more...enter choice(yes/no)?";\par
+\tab cin>>ch;\par
+\tab if(ch == 'y' || ch == 'Y')\par
+\tab goto up;\par
+\par
+\tab return 0;\par
+\}\par
+\par
+
+\pard\sa200\sl276\slmult1\f0\lang9 5.3\par
+
+\pard\f1\lang1033 #include <iostream>\par
+using namespace std;\par
+\par
+struct Node \{\par
+    int data;\par
+    struct Node *left, *right;\par
+\};\par
+\par
+Node* newNode(int data)\par
+\{\par
+    Node* temp = new Node;\par
+    temp->data = data;\par
+    temp->left = temp->right = NULL;\par
+    return temp;\par
+\}\par
+\par
+void printPostorder(struct Node* node)\par
+\{\par
+    if (node == NULL)\par
+        return;\par
+\par
+    printPostorder(node->left);\par
+    printPostorder(node->right);\par
+    cout << node->data << " ";\par
+\}\par
+\par
+void printInorder(struct Node* node)\par
+\{\par
+    if (node == NULL)\par
+        return;\par
+\par
+    printInorder(node->left);\par
+    cout << node->data << " ";\par
+    printInorder(node->right);\par
+\}\par
+\par
+void printPreorder(struct Node* node)\par
+\{\par
+    if (node == NULL)\par
+        return;\par
+\par
+    cout << node->data << " ";\par
+    printPreorder(node->left);\par
+    printPreorder(node->right);\par
+\}\par
+\par
+int main()\par
+\{\par
+    struct Node* root = newNode(1);\par
+    root->left = newNode(2);\par
+    root->right = newNode(3);\par
+    root->left->left = newNode(14);\par
+    root->left->right = newNode(17);\par
+\par
+    cout << "\\nPreorder traversal of binary tree is \\n";\par
+    printPreorder(root);\par
+\par
+    cout << "\\nInorder traversal of binary tree is \\n";\par
+    printInorder(root);\par
+\par
+    cout << "\\nPostorder traversal of binary tree is \\n";\par
+    printPostorder(root);\par
+\par
+    return 0;\par
+\}\par
+\par
+
+\pard\sa200\sl276\slmult1\f0\lang9 5.5\par
+
+\pard\f1\lang1033 #include <bits/stdc++.h>\par
+using namespace std;\par
+\par
+struct node\par
+\{\par
+    int data;\par
+    struct node* left;\par
+    struct node* right;\par
+\};\par
+\par
+struct node* newNode(int data)\par
+\{\par
+struct node* node = (struct node*)\par
+                    malloc(sizeof(struct node));\par
+node->data = data;\par
+node->left = NULL;\par
+node->right = NULL;\par
+\par
+return(node);\par
+\}\par
+struct node* insert(struct node* node, int data)\par
+\{\par
+\par
+if (node == NULL)\par
+    return(newNode(data));\par
+else\par
+\{\par
+\par
+    if (data <= node->data)\par
+        node->left = insert(node->left, data);\par
+    else\par
+        node->right = insert(node->right, data);\par
+\par
+    return node;\par
+\}\par
+\}\par
+int minValue(struct node* node)\par
+\{\par
+struct node* current = node;\par
+while (current->left != NULL)\par
+\{\par
+    current = current->left;\par
+\}\par
+return(current->data);\par
+\}\par
+int main()\par
+\{\par
+struct node* root = NULL;\par
+root = insert(root, 8);\par
+insert(root, 1);\par
+insert(root, 2);\par
+insert(root, 3);\par
+insert(root, 9);\par
+insert(root, 5);\par
+\par
+cout << "\\n Minimum value in BST is " << minValue(root);\par
+getchar();\par
+return 0;\par
+\}\par
+\par
+
+\pard\sa200\sl276\slmult1\f0\lang9\par
+}
+ 

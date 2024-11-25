@@ -1,0 +1,184 @@
+According to the given question we need to define structure for product and use arrays of structure by dynamically allocating memory from heap of size entered by user and then do given tasks according to the question.
+
+First define a structure using struct keyword according to data given in questions. Then declare a pointer of structure and use 'new' keyword to dynamically allocate memory of size n. Now using loop traverse through array n times and prompt the user for details for each information of product one by one.
+
+Then use different functions to do different tasks. First we need to display product information whose price is greater than 40. First search these products and define and use the function to display information of product passed in argument. Similarly define function to display production information based on brand name by searching and using function to display product information. Do this same for function to calculate asset(quantity*price) of the given type and then finally define a function to calculate total asset of grocery shop.
+
+Now implement these functions in main().
+
+Code(Refer to comments for line by line explanation):
+
+#include <iostream>
+
+using namespace std;
+
+//Definition of structure of product
+struct product
+{
+int id;
+string name;
+string brand;
+string type;
+int qty;
+double price;
+};
+
+//Function to display information of product passed as parameter
+void displayproduct(product p)
+{
+cout<<"Id: "<<p.id<<endl;
+
+cout<<"Name: "<<p.name<<endl;
+
+cout<<"Brand Name: "<<p.brand<<endl;
+
+cout<<"Type: "<<p.type<<endl;
+
+cout<<"Quantity: "<<p.qty<<endl;
+
+cout<<"Price: "<<p.price<<endl;
+
+}
+
+//Function to display product information whose price is greater than 40
+void displayabove40(product* ptr,int n)
+{
+cout<<"Products whose prices are above 40 are:\n";
+//Flag to check whether required product is found or not
+int f=0;
+
+for(int i=0;i<n;i++)
+{
+if(ptr[i].price>40)
+{ //display product using this function
+displayproduct(ptr[i]);
+//flag=1 means product is found
+f=1;
+}
+}
+//f remains 0 if required product is not found while traversing
+if(f==0)
+cout<<"There are no products whose price is greater than 40.\n";
+
+}
+
+//Function to display product information whose brand matches with brand name
+// passed in argument
+void displayby_brandname(product* ptr,int n,string brand)
+{
+int f=0;
+for(int i=0;i<n;i++)
+{
+if(ptr[i].brand==brand)
+{
+displayproduct(ptr[i]);
+f=1;
+}
+}
+if(f==0)
+cout<<"There are no products whose brand is equal to "<<brand<<endl;
+}
+
+//Function to display product information whose type matches with type
+// passed in argument
+void calculateassetby_type(product* ptr,int n,string type)
+{
+int f=0;
+//to store sum of qty*price of every product
+double s=0;
+
+for(int i=0;i<n;i++)
+{
+if(ptr[i].type==type)
+{
+s+=ptr[i].qty*ptr[i].price;
+f=1;
+}
+}
+if(f==0)
+{
+cout<<"There are no products whose type is equal to "<<type<<endl;
+return;
+}
+cout<<"Total asset of products of type "<<type<<" is "<<s<<endl;
+}
+
+//Function to calculate total asset of the grocery shop
+void calculate_totalasset(product* ptr,int n)
+{
+double s=0;
+
+for(int i=0;i<n;i++)
+{
+
+s+=ptr[i].qty*ptr[i].price;
+}
+
+cout<<"Total asset of grocery shop is "<<s<<endl;
+
+}
+
+int main()
+{
+//to store number of products
+int n;
+
+//Prompt user to enter number of products to be stored
+cout<<"How many products you want to store: ";
+cin>>n;
+product *ptr;
+//Dynamically allocating array from heap of size n and storing address
+//in pointer p
+ptr=new product[n];
+int c=0;
+
+//Prompt user to enter details of product one by one
+cout<<"Enter details of product:\n";
+
+//Assigning value of ptr to pt to avoid manipulating original pointer
+//while traversing
+product *pt=ptr;
+
+while(c<n)
+{
+cout<<"Id: ";
+cin>>pt->id;
+
+cout<<"Name: ";
+cin>>pt->name;
+
+cout<<"Brand Name: ";
+cin>>pt->brand;
+
+cout<<"Type: ";
+cin>>pt->type;
+
+cout<<"Quantity: ";
+cin>>pt->qty;
+
+cout<<"Price: ";
+cin>>pt->price;
+
+cout<<endl;
+
+pt++;
+c++;
+}
+
+//Using functions adding some more tasks as given in question
+displayabove40(ptr,n);cout<<endl;
+
+string brand;
+cout<<"Enter the brand of product whose information is to be displayed: ";
+cin>>brand;
+displayby_brandname(ptr,n,brand);cout<<endl;
+
+string type;
+cout<<"Enter the type of product whose total asset is to be calculated: ";
+cin>>type;
+calculateassetby_type(ptr,n,type);cout<<endl;
+
+calculate_totalasset(ptr,n);
+
+return 0;
+}
